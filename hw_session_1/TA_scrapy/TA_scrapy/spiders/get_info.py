@@ -5,7 +5,8 @@
 ################################################################################################
 
 def get_urls_resto_in_main_search_page(response):
-    return response.css('a.restaurants-list-ListCell__restaurantName--2aSdo ::attr(href)').extract()
+    return response.css('a._15_ydu6b::attr(href)').extract()
+    #return response.css('a.restaurants-list-ListCell__restaurantName--2aSdo ::attr(href)').extract()
 
 
 def get_urls_next_list_of_restos(response):

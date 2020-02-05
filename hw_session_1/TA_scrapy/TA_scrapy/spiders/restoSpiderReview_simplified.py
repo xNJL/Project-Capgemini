@@ -12,7 +12,7 @@ from TA_scrapy.spiders import get_info          # package where you can write yo
 class RestoReviewSpider(scrapy.Spider):
     name = "RestoReviewSpider"
 
-    def __init__(self, *args, **kwargs): 
+    def __init__(self, *args, **kwargs):
         super(RestoReviewSpider, self).__init__(*args, **kwargs)
 
         # Set logging level
@@ -22,7 +22,7 @@ class RestoReviewSpider(scrapy.Spider):
         self.main_nb = 0
         self.resto_nb = 0
         self.review_nb = 0
-        
+
 
     def start_requests(self):
         """ Give the urls to follow to scrapy
@@ -33,11 +33,11 @@ class RestoReviewSpider(scrapy.Spider):
         url = 'https://www.tripadvisor.co.uk/Restaurants-g191259-Greater_London_England.html'
         yield scrapy.Request(url=url, callback=self.parse)
 
-   
+
     def parse(self, response):
         """MAIN PARSING : Start from a classical reastaurant page
             - Usually there are 30 restaurants per page
-            - 
+            -
         """
 
         # Display a message in the console
@@ -47,15 +47,16 @@ class RestoReviewSpider(scrapy.Spider):
         # Get the list of the 30 restaurants of the page
         restaurant_urls = get_info.get_urls_resto_in_main_search_page(response)
         
+
         # For each url : follow restaurant url to get the reviews
         for restaurant_url in restaurant_urls:
-            logger.warn('> New restaurant detected : {}'.format(url))
+            logger.warn('> New restaurant detected : {}'.format(restaurant_url))
             yield response.follow(url=restaurant_url, callback=self.parse_resto)
 
-        
+
         # Get next page information
         next_page, next_page_number = get_info.get_urls_next_list_of_restos(response)
-        
+
         # Follow the page if we decide to
         if get_info.go_to_next_page(next_page, next_page_number, max_page=10):
             yield response.follow(next_page, callback=self.parse)
@@ -65,8 +66,12 @@ class RestoReviewSpider(scrapy.Spider):
         """SECOND PARSING : Given a restaurant, get each review url and get to parse it
             - Usually there are 10 comments per page
         """
+        
         logger.warn(' > PARSING NEW RESTO PAGE ({})'.format(self.resto_nb))
         self.resto_nb += 1
+        print('\n\n\n')
+        print(response)
+        print('\n\n\n')
 
         # Get the list of reviews on the restaurant page
 
@@ -74,7 +79,7 @@ class RestoReviewSpider(scrapy.Spider):
         #### YOUR CODE HERE ####
         ########################
         # urls_review = ...
-        
+
         ########################
         ########################
 
@@ -82,11 +87,11 @@ class RestoReviewSpider(scrapy.Spider):
         for url_review in urls_review:
              yield response.follow(url=url_review, callback=self.parse_review)
 
-        
+
         ########################
         #### YOUR CODE HERE ####
         ########################
-        
+
         ########################
         ########################
 
@@ -106,12 +111,9 @@ class RestoReviewSpider(scrapy.Spider):
 
         # You can store the scrapped data into a dictionnary or create an Item in items.py (cf XActuItem and scrapy documentation)
         review_item = {}
-        
-        
+
+
         ########################
         ########################
-        
-        yield review_item 
 
-
-
+        yield review_item
