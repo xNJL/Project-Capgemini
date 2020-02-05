@@ -16,7 +16,7 @@ class RestoReviewSpider(scrapy.Spider):
         super(RestoReviewSpider, self).__init__(*args, **kwargs)
 
         # Set logging level
-        logzero.loglevel(logging.WARNING)
+        logzero.loglevel(logging.DEBUG)
 
         # To track the evolution of scrapping
         self.main_nb = 0
