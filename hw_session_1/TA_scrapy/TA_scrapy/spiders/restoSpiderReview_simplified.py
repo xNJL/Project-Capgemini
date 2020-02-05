@@ -69,31 +69,25 @@ class RestoReviewSpider(scrapy.Spider):
         
         logger.warn(' > PARSING NEW RESTO PAGE ({})'.format(self.resto_nb))
         self.resto_nb += 1
-        print('\n\n\n')
-        print(response)
-        print('\n\n\n')
+        
 
         # Get the list of reviews on the restaurant page
 
-        ########################
-        #### YOUR CODE HERE ####
-        ########################
-        # urls_review = ...
-
-        ########################
-        ########################
+        urls_review = get_info.get_urls_review_in_resto_page(response)
 
         # For each review open the link and parse it into the parse_review method
         for url_review in urls_review:
-             yield response.follow(url=url_review, callback=self.parse_review)
+            logger.warn('> New review detected : {}'.format(url_review))
+            yield response.follow(url=url_review, callback=self.parse_review)
 
+        if len(urls_review) == 10:
+            # Get next page information
+            next_page_r, next_page_number_r = get_info.get_urls_next_list_of_reviews(response)
 
-        ########################
-        #### YOUR CODE HERE ####
-        ########################
-
-        ########################
-        ########################
+            # Follow the page if we decide to
+            
+            if get_info.go_to_next_page(next_page_r, next_page_number_r, max_page=10):
+                yield response.follow(next_page_r, callback=self.parse)
 
 
     def parse_review(self, response):
@@ -101,6 +95,8 @@ class RestoReviewSpider(scrapy.Spider):
             - Read these data and store them
             - Get all the data you can find and that you believe interesting
         """
+
+        logger.warn(' > PARSING NEW REVIEW PAGE ({})'.format(self.review_nb))
 
         # Count the number of review scrapped
         self.review_nb += 1
