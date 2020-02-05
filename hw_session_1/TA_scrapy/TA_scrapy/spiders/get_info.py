@@ -10,9 +10,6 @@ def get_urls_resto_in_main_search_page(response):
 
 
 def get_urls_next_list_of_restos(response):
-
-    print(response)
-
     xpath = '//*[@id="EATERY_LIST_CONTENTS"]/div/div/a'
     next_page = response.xpath(xpath).css('::attr(href)').extract()[-1]
     next_page_number = response.xpath(xpath).css('::attr(data-page-number)').extract_first()

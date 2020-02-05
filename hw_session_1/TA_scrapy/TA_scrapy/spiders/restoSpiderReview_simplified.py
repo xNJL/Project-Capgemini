@@ -87,7 +87,7 @@ class RestoReviewSpider(scrapy.Spider):
             # Follow the page if we decide to
             
             if get_info.go_to_next_page(next_page_r, next_page_number_r, max_page=10):
-                yield response.follow(next_page_r, callback=self.parse)
+                yield response.follow(next_page_r, callback=self.parse_resto)
 
 
     def parse_review(self, response):
