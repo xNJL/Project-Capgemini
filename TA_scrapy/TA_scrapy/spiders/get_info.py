@@ -54,3 +54,15 @@ def go_to_next_page(next_page, next_page_number=None, max_page=10, printing=Fals
 #                                       REVIEW INFORMATION 
 ################################################################################################
 ################################################################################################
+
+
+def get_urls_review_in_resto_page(response):
+    return response.css('a.title::attr(href)').extract()
+
+
+def get_urls_next_list_of_reviews(response):
+    xpath = '//*[@class="nav next ui_button primary"]'
+    next_page = response.xpath(xpath).css('::attr(href)').extract()[0]
+    next_page_number = response.xpath(xpath).css('::attr(data-page-number)')[0].extract()
+
+    return next_page, next_page_number
