@@ -94,12 +94,18 @@ class RestoReviewSpider(scrapy.Spider):
         # Count the number of review scrapped
         self.review_nb += 1
 
-        ########################
-        #### YOUR CODE HERE ####
-        ########################
-
         # You can store the scrapped data into a dictionnary or create an Item in items.py (cf XActuItem and scrapy documentation)
         review_item = {}
+
+        text = response.css('div.entry > p::text').get()
+        title = response.css('span.noQuotes::text').get()
+        date = response.css('span.ratingDate::attr(title)').get()
+        restaurant = response.css('div.surContent > a::text').get()
+
+        review_item["text"] = text
+        review_item["title"] = title
+        review_item["date"] = date
+        review_item["restaurant"] = restaurant
 
         ########################
         ########################
