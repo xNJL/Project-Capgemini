@@ -88,26 +88,17 @@ class RestoReviewSpider(scrapy.Spider):
             - Read these data and store them
             - Get all the data you can find and that you believe interesting
         """
-
         logger.warn(' > PARSING NEW REVIEW PAGE ({})'.format(self.review_nb))
-
+        
         # Count the number of review scrapped
         self.review_nb += 1
 
-        # You can store the scrapped data into a dictionnary or create an Item in items.py (cf XActuItem and scrapy documentation)
-        review_item = {}
+        
+        # You can store the scrapped data into a dictionnary or create an Item in items.py (cf XActuItem and scrapy documentation) 
+        review_item=ReviewRestoItem()
+        review_item=get_info.get_review_data(response,review_item)            
+        
+        yield review_item 
 
-        text = response.css('div.entry > p::text').get()
-        title = response.css('span.noQuotes::text').get()
-        date = response.css('span.ratingDate::attr(title)').get()
-        restaurant = response.css('div.surContent > a::text').get()
 
-        review_item["text"] = text
-        review_item["title"] = title
-        review_item["date"] = date
-        review_item["restaurant"] = restaurant
 
-        ########################
-        ########################
-
-        yield review_item

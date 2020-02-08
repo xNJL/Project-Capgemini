@@ -9,6 +9,7 @@ import scrapy
 
 import pandas as pd
 
+
 class XActuItem(scrapy.Item):
     titre_article = scrapy.Field()
     lien_article = scrapy.Field()
@@ -21,12 +22,9 @@ class XActuItem(scrapy.Item):
 
 class ReviewRestoItem(scrapy.Item):
         
-        
-    ########################
-    #### YOUR CODE HERE ####
-    ########################
-
-    ########################
-    ########################
-   
-   pass
+    Date_of_visit = scrapy.Field()
+    Restaurant_name=scrapy.Field()
+    Review_title = scrapy.Field()
+    Review = scrapy.Field()
+    Rating = scrapy.Field()
+    Review_url=scrapy.Field()

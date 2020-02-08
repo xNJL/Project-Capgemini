@@ -19,13 +19,11 @@ def get_urls_next_list_of_restos(response):
 def go_to_next_page(next_page, next_page_number=None, max_page=10, printing=False):
     """ According to next_page, and number of pages to scrap, tells if we should go on or stop.
     returns a boolean value : True (you should follow taht url) / False (you should stop scrapping)
-
     - next_page (str)           : the url of the next_page
     - next_page_number (int)    : often extracte from next_page, it is the number of the next page on the website
     - max_page (int)            : number of page you want to scrap.
                                 If set to None, will scrap until the end of the website (might be very long).
     - printing(bool)            : If set to true will display messages at each new page to explain what is happening (useful for debug purprose)
-
     """
 
     if next_page is None:
@@ -67,3 +65,12 @@ def get_urls_next_list_of_reviews(response):
     next_page_number = response.xpath(xpath).css('::attr(data-page-number)')[0].extract()
 
     return next_page, next_page_number
+
+def get_review_data(response,review_item):
+    review_item['Review_title'] = response.css('span.noQuotes::text').extract_first()
+    review_item['Review']=response.css('div.entry p::text').extract_first()
+    review_item["Date_of_visit"]=response.css("div.prw_rup.prw_reviews_stay_date_hsx::text").extract_first()
+    review_item["Restaurant_name"]=response.css("div.surContent a::text").extract_first()
+    review_item['Rating']=int((response.css('span.ui_bubble_rating::attr("class")').extract_first())[-2])
+    review_item['Review_url']=response.url
+    return review_item
