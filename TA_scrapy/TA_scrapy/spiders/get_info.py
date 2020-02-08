@@ -5,7 +5,8 @@
 ################################################################################################
 
 def get_urls_resto_in_main_search_page(response):
-    return response.css('a.restaurants-list-ListCell__restaurantName--2aSdo ::attr(href)').extract()
+    return response.css('a._15_ydu6b::attr(href)').extract()
+    # return response.css('a.restaurants-list-ListCell__restaurantName--2aSdo ::attr(href)').extract()
 
 
 def get_urls_next_list_of_restos(response):
@@ -49,12 +50,12 @@ def go_to_next_page(next_page, next_page_number=None, max_page=10, printing=Fals
                     if printing: print('LIMIT was reached. STOP.')
     return False
 
-################################################################################################
-################################################################################################
-#                                       REVIEW INFORMATION 
-################################################################################################
-################################################################################################
 
+################################################################################################
+################################################################################################
+#                                       REVIEW INFORMATION
+################################################################################################
+################################################################################################
 
 def get_urls_review_in_resto_page(response):
     return response.css('a.title::attr(href)').extract()

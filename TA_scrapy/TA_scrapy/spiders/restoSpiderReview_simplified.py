@@ -33,9 +33,9 @@ class RestoReviewSpider(scrapy.Spider):
         yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        """MAIN PARSING : Start from a classical restaurant page
+        """MAIN PARSING : Start from a classical reastaurant page
             - Usually there are 30 restaurants per page
-            - 
+            -
         """
 
         # Display a message in the console
@@ -88,6 +88,8 @@ class RestoReviewSpider(scrapy.Spider):
             - Read these data and store them
             - Get all the data you can find and that you believe interesting
         """
+
+        logger.warn(' > PARSING NEW REVIEW PAGE ({})'.format(self.review_nb))
 
         # Count the number of review scrapped
         self.review_nb += 1
