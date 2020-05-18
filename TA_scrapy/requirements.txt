@@ -1,0 +1,25 @@
+# data manipulation
+numpy
+scipy
+pandas
+
+# data viz
+matplotlib
+seaborn
+
+# ml
+scikit-learn
+gensim
+nltk
+
+# for convenience
+logzero
+jupyter
+jupyterlab
+
+# Other pluggins
+scrapy
+requests
+wordcloud
+stop_words
+
